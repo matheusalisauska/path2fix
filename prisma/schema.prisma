@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  username  String    @unique
+  password  String
+  likes     Like[]
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+}
+
+model Like {
+  userId  String
+  errorId String
+  user    User   @relation(fields: [userId], references: [id])
+  error   Error  @relation(fields: [errorId], references: [id])
+
+  @@id([userId, errorId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  userId    String
+  errorId   String
+  user      User     @relation(fields: [userId], references: [id])
+  error     Error    @relation(fields: [errorId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Error {
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now())
+  title       String
+  description String
+  stack       String[]
+  tags        ErrorTag[]
+  likes       Like[]
+  comments    Comment[]
+}
+
+model Tag {
+  id        String     @id @default(cuid())
+  name      String
+  color     String
+  errors    ErrorTag[]
+  createdAt DateTime   @default(now())
+}
+
+model ErrorTag {
+  errorId String
+  tagId   String
+  error   Error  @relation(fields: [errorId], references: [id])
+  tag     Tag    @relation(fields: [tagId], references: [id])
+
+  @@id([errorId, tagId])
+}
