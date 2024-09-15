@@ -24,7 +24,7 @@ export const signupAction = actionClient
         });
 
         if (response.ok) {
-            redirect('/login');
+            redirect('/sign-in');
         } else {
             throw new ActionError('Erro ao cadastrar usuário');
         }

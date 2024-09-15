@@ -1,6 +1,7 @@
 import '@/styles/globals.css';
 import { Inter } from 'next/font/google';
 
+import Provider from '@/provider';
 import type { Metadata } from 'next';
 import { Toaster } from 'sonner';
 
@@ -40,7 +41,7 @@ export default function RootLayout({
                 <meta property='og:image:height' content='<generated>' />
             </head>
             <body className='bg-[#f5f5f5]'>
-                {children}
+                <Provider>{children}</Provider>
                 <Toaster />
             </body>
         </html>
