@@ -15,7 +15,7 @@ export const CarouselError = ({ errors }: CarouselErrorpProps) => {
         <Carousel className='-mx-5'>
             <CarouselContent>
                 {errors.map((error, index) => (
-                    <CarouselItem key={index} className='basis-[60%] pl-8'>
+                    <CarouselItem key={index} className='basis-[70%] pl-8'>
                         <ErrorCard error={error} />
                     </CarouselItem>
                 ))}

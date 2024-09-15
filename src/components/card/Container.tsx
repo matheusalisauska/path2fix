@@ -10,7 +10,7 @@ interface ContainerProps {
 
 const Container = (props: ContainerProps) => {
     return (
-        <div className={cn(workSans.className,"flex flex-col gap-4 h-fit  p-4 w-fit rounded-[20px] bg-white max-w-[230px]")}>
+        <div className={cn(workSans.className,"flex flex-col gap-4 h-fit  p-4 w-fit rounded-[20px] bg-white max-w-[260px]")}>
             {props.children}
         </div>
     )

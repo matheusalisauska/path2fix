@@ -5,6 +5,7 @@ import prisma from '@/lib/db';
 import { Plus, SlidersHorizontal } from 'lucide-react';
 
 export const MyErrors = async () => {
+    
     const errors = await prisma.error.findMany({
         include: {
             tags: {
@@ -14,6 +15,7 @@ export const MyErrors = async () => {
             }
         }
     });
+
     return (
         <Section.Container className='flex flex-col gap-6'>
             <Section.Wrapper className='flex-row justify-between'>

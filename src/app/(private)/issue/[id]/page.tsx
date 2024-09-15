@@ -1,13 +1,12 @@
 import { Section } from '@/components/section';
 import { Comment } from '@/components/sections/error/Comment';
-import { ErrorInteraction } from '@/components/sections/error/ErrorInteractions';
+import { IssueInteraction } from '@/components/sections/error/IssueInteraction';
 import { PullRequest } from '@/components/sections/error/PullRequest';
 import Tag from '@/components/Tag';
 import { Separator } from '@/components/ui/separator';
 import prisma from '@/lib/db';
 
 export default async function Page({ params }: { params: { id: string } }) {
-
     const error = await prisma.error.findUnique({
         where: {
             id: params.id,
@@ -21,6 +20,9 @@ export default async function Page({ params }: { params: { id: string } }) {
             likes: true,
         },
     });
+
+    const comments = await prisma.comment.findMany();
+
     if (!error) {
         return <div>error</div>;
     }
@@ -43,12 +45,12 @@ export default async function Page({ params }: { params: { id: string } }) {
                             className='text-2xl leading-6'
                         />
                         <p className='text-[#7B7B7B]'>{error.description}</p>
-                        <ErrorInteraction error={error} userId={'4324'}/>
+                        <IssueInteraction error={error} userId={'4324'} />
                         <PullRequest />
                     </div>
                 </Section.Wrapper>
                 <Separator />
-                <Comment />
+                <Comment comments={comments} />
             </Section.Container>
         </main>
     );
