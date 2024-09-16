@@ -6,10 +6,10 @@ import Tag from '@/components/Tag';
 import { Separator } from '@/components/ui/separator';
 import prisma from '@/lib/db';
 
-export default async function Page({ params }: { params: { id: string } }) {
-    const error = await prisma.error.findUnique({
+async function getData(id: string) {
+    const data = await prisma.error.findUnique({
         where: {
-            id: params.id,
+            id: id,
         },
         include: {
             tags: {
@@ -18,21 +18,31 @@ export default async function Page({ params }: { params: { id: string } }) {
                 },
             },
             likes: true,
+            comments: {
+                include: {
+                    user: true
+                }
+            },
         },
     });
 
-    const comments = await prisma.comment.findMany();
+    return data;
+}
 
-    if (!error) {
+export default async function Page({ params }: { params: { id: string } }) {
+    const data = await getData(params.id);
+
+    if (!data) {
         return <div>error</div>;
     }
+
     return (
         <main className='flex flex-col gap-4 p-5'>
             <Section.Container className='flex flex-col gap-6'>
                 <Section.Wrapper className='flex-row justify-between'>
                     <div className='flex flex-col gap-4'>
                         <div className='flex items-center gap-2'>
-                            {error.tags.map((tag, index) => (
+                            {data.tags.map((tag, index) => (
                                 <Tag
                                     key={index}
                                     title={tag.tag.name}
@@ -41,16 +51,16 @@ export default async function Page({ params }: { params: { id: string } }) {
                             ))}
                         </div>
                         <Section.Title
-                            title={error?.title}
+                            title={data?.title}
                             className='text-2xl leading-6'
                         />
-                        <p className='text-[#7B7B7B]'>{error.description}</p>
-                        <IssueInteraction error={error} userId={'4324'} />
+                        <p className='text-[#7B7B7B]'>{data.description}</p>
+                        <IssueInteraction error={data} userId={'4324'} />
                         <PullRequest />
                     </div>
                 </Section.Wrapper>
                 <Separator />
-                <Comment comments={comments} />
+                <Comment comments={data.comments} errorId={params.id} />
             </Section.Container>
         </main>
     );

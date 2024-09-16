@@ -27,3 +27,12 @@ export const likeIssueSchema = z.object({
 });
 
 export type LikeIssue = z.infer<typeof likeIssueSchema>;
+
+
+
+export const createCommentSchema = z.object({
+    errorId: z.string().min(1, 'Error ID is required').max(100),
+    content: z.string().min(1, 'Content is required'),
+});
+
+export type CreateComment = z.infer<typeof createCommentSchema>;
