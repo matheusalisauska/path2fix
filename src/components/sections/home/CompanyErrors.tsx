@@ -1,11 +1,10 @@
-import { CarouselError } from '@/components/carousel/CarouselError';
-import { Section } from '@/components/section/index';
-import { Separator } from '@/components/ui/separator';
+import { ErrorCompanyCard } from '@/components/ErrorCompanyCard';
+import { Section } from '@/components/section';
 import prisma from '@/lib/db';
+import { Separator } from '@radix-ui/react-separator';
 import { Plus, SlidersHorizontal } from 'lucide-react';
-import Link from 'next/link';
 
-export const MyErrors = async () => {
+async function getData() {
     const errors = await prisma.error.findMany({
         include: {
             tags: {
@@ -15,12 +14,16 @@ export const MyErrors = async () => {
             },
         },
     });
+    return errors;
+}
 
+export const CompanyErrors = async () => {
+    const errors = await getData();
     return (
         <Section.Container className='flex flex-col gap-6'>
             <Section.Wrapper className='flex-row justify-between'>
                 <div className='flex flex-col'>
-                    <Section.Title title='My Issues' className='leading-6' />
+                    <Section.Title title='Company Issues' className='leading-6' />
                     <Section.Description
                         description={`${errors.length} error${errors.length > 1 ? 's' : ''}`}
                     />
@@ -28,12 +31,12 @@ export const MyErrors = async () => {
                 <div className='flex items-center gap-2'>
                     <SlidersHorizontal size={20} />
                     <Separator orientation='vertical' />
-                    <Link href='/issue/create'>
-                        <Plus size={20} />
-                    </Link>
+                    <Plus size={20} />
                 </div>
             </Section.Wrapper>
-            <CarouselError errors={errors} />
+            {errors.map((error, index) => (
+                <ErrorCompanyCard key={index} error={error} />
+            ))}
         </Section.Container>
     );
 };

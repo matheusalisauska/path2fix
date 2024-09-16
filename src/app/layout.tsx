@@ -40,7 +40,7 @@ export default function RootLayout({
                 <meta property='og:image:width' content='<generated>' />
                 <meta property='og:image:height' content='<generated>' />
             </head>
-            <body className='bg-[#f5f5f5]'>
+            <body className='bg-[#f5f5f5] max-w-screen w-full'>
                 <Provider>{children}</Provider>
                 <Toaster />
             </body>

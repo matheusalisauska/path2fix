@@ -6,9 +6,9 @@ export default function ErrorLayout({
     children: React.ReactNode;
 }) {
     return (
-        <>
+        <div className='w-full h-full min-h-screen'>
             <HeaderError />
             {children}
-        </>
+        </div>
     );
 }

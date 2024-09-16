@@ -1,18 +1,20 @@
+
+
 import { ErrorWithTags } from '@/types';
 import { MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 import { Card } from './card';
 import Tag from './Tag';
 
-interface ErrorCardProps {
+interface ErrorCompanyCardProps {
     error: ErrorWithTags;
 }
 
-export const ErrorCard = async ({ error }: ErrorCardProps) => {
+export const ErrorCompanyCard= async ({ error }: ErrorCompanyCardProps) => {
     return (
         <Link href={`/issue/${error.id}`}>
-            <Card.Container>
-                <Card.Wrapper direction='row' className=''>
+            <Card.Container className='!w-full !h-fit !max-w-none'>
+                <Card.Wrapper direction='row' className='w-full'>
                     {error.tags.map((tag, index) => (
                         <Tag
                             key={index}
