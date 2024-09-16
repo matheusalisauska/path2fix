@@ -1,24 +1,26 @@
 'use client';
 
 import { createCommentAction } from '@/actions/create-comment';
-import { CommentList } from '@/components/CommentList';
+import { CommentList } from '@/components/comment/CommentList';
 import { Input } from '@/components/ui/input';
+import { CommentWithUser } from '@/types';
 import { ChevronRight, MessageSquareText } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { useOptimistic, useState } from 'react';
 
 interface CommentProps {
-    comments: any[];
+    comments: CommentWithUser[];
     errorId: string;
 }
 
 export const Comment = ({ comments, errorId }: CommentProps) => {
+    const { data: session } = useSession();
     const [comment, setComment] = useState('');
-
     const [optimisticComment, addOptmisticComment] = useOptimistic(
         comments,
         (state: { content: string }[], newMessage: string) => [
             ...state,
-            { content: newMessage },
+            { content: newMessage, user: { username: session?.user.name } },
         ]
     );
 
@@ -42,9 +44,9 @@ export const Comment = ({ comments, errorId }: CommentProps) => {
                             errorId: errorId,
                         });
                     }}
-                    className='flex size-9 items-center rounded-sm bg-[#18181b] p-1 px-2'
+                    className='flex size-9 items-center rounded-sm border-[1px] border-[#CCCCCC]  p-1 px-2'
                 >
-                    <ChevronRight color='white' />
+                    <ChevronRight color='#575757' />
                 </button>
             </div>
             <CommentList comments={optimisticComment} />

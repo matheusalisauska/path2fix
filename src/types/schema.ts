@@ -28,11 +28,15 @@ export const likeIssueSchema = z.object({
 
 export type LikeIssue = z.infer<typeof likeIssueSchema>;
 
-
-
 export const createCommentSchema = z.object({
     errorId: z.string().min(1, 'Error ID is required').max(100),
     content: z.string().min(1, 'Content is required'),
 });
 
 export type CreateComment = z.infer<typeof createCommentSchema>;
+
+export const deleteCommentSchema = z.object({
+    id: z.string().min(1, 'Comment ID is required').max(100),
+});
+
+export type DeleteComment = z.infer<typeof deleteCommentSchema>;

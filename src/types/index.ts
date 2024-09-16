@@ -1,4 +1,5 @@
-// Define o tipo do Tag
+import { Prisma } from '@prisma/client';
+
 type Tag = {
     tag: {
         id: string;
@@ -27,9 +28,14 @@ export type ErrorType = {
     likes: Likes[];
 };
 
-
-
-
 export type InputMasks = 'phone';
 
 export type MaskHandler = (event: React.ChangeEvent<HTMLInputElement>) => void;
+
+export type CommentWithUser = Prisma.CommentGetPayload<{
+    include: { user: true };
+}>;
+
+export type ErrorWithTags = Prisma.ErrorGetPayload<{
+    include: { tags: { include: { tag: true } } };
+}>;

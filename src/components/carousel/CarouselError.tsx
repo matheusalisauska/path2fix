@@ -4,10 +4,10 @@ import {
     CarouselItem,
 } from '@/components/ui/carousel';
 import { ErrorCard } from '../ErrorCard';
-import { ErrorType } from '@/types';
+import { ErrorWithTags } from '@/types';
 
 interface CarouselErrorpProps {
-    errors: ErrorType[];
+    errors: ErrorWithTags[];
 }
 
 export const CarouselError = ({ errors }: CarouselErrorpProps) => {

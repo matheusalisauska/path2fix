@@ -20,8 +20,8 @@ async function getData(id: string) {
             likes: true,
             comments: {
                 include: {
-                    user: true
-                }
+                    user: true,
+                },
             },
         },
     });
@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     }
 
     return (
-        <main className='flex flex-col gap-4 p-5'>
+        <main className='flex  w-full flex-col gap-4 bg-[#f5f5f5] p-5'>
             <Section.Container className='flex flex-col gap-6'>
                 <Section.Wrapper className='flex-row justify-between'>
                     <div className='flex flex-col gap-4'>
