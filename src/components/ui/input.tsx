@@ -10,11 +10,11 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { InputMasks, MaskHandler } from '@/types';
 
 export const inputVariants = cva(
-'flex h-12 w-full lg:max-w-full items-center focus-within:border-black/40 px-2 pl-4',
+'flex h-10 w-full lg:max-w-full items-center focus-within:border-black/40 px-2 pl-4',
   {
     variants: {
       variant: {
-        default: 'border-[1px] border-[#CCCCCC] rounded-xl',
+        default: 'border-[1px] border-[#CCCCCC] rounded-md',
         underline: 'border-b border-[#CCCCCC]',
         ghost: 'border-none p-0',
       },

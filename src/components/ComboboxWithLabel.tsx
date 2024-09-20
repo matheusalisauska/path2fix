@@ -7,8 +7,8 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { useFormContext } from "react-hook-form"
+import { Combobox } from "./ui/combobox"
 
 type Props = {
     fieldTitle: string,
@@ -16,9 +16,10 @@ type Props = {
     placeholder?: string,
     labelLeft?: boolean,
     readOnly?: boolean,
+    options: { label: string, value: string }[]
 }
 
-export function InputWithLabel({ fieldTitle, nameInSchema, placeholder, labelLeft, readOnly }: Props) {
+export function ComboboxWithLabel({ fieldTitle, nameInSchema, placeholder, labelLeft, readOnly, options }: Props) {
     const form = useFormContext()
 
     const fieldTitleNoSpaces = fieldTitle.replaceAll(' ', '-')
@@ -29,17 +30,18 @@ export function InputWithLabel({ fieldTitle, nameInSchema, placeholder, labelLef
             name={nameInSchema}
             render={({ field }) => (
                 <FormItem className={labelLeft ? "w-full flex flex-col items-center gap-2" : ""}>
-                    <FormLabel className={`text-sm text-[#666666] font-semibold ${labelLeft ? "w-1/3 mt-2" : ""}`} htmlFor={fieldTitleNoSpaces}>
+                    <FormLabel className={`text-sm text-[#666666] ${labelLeft ? "w-1/3 mt-2" : ""}`} htmlFor={fieldTitleNoSpaces}>
                         {fieldTitle}
                     </FormLabel>
                     <div className={`flex items-center gap-2 ${labelLeft ? "w-2/3" : "w-full"}`}>
                         <div className="w-full flex items-center">
                             <FormControl>
-                                <Input
+                                <Combobox
                                     {...field}
                                     id={fieldTitleNoSpaces}
-                                    className="w-full px-1"
-                                    placeholder={placeholder}
+                                    setSelected={field.onChange}
+                                    options={options}
+                                    className="w-full"
                                     readOnly={readOnly}
                                     disabled={readOnly}
                                     value={field.value}
